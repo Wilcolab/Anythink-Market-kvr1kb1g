@@ -69,6 +69,12 @@ body {
   border-color: var(--primary-color);
 }
 
+.file-input-container.drag-over {
+  border-color: var(--primary-color);
+  background-color: rgba(99, 102, 241, 0.05);
+  transform: scale(1.02);
+}
+
 .file-input-container svg {
   width: 4rem;
   height: 4rem;

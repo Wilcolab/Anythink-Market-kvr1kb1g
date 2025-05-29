@@ -5,17 +5,41 @@ A modern web application that allows you to upload images and apply various filt
 ## Features
 
 - Easy image upload with drag-and-drop support
-- 12 different image filters including:
+- 13 different image filters including:
   - Grayscale
   - Blur
   - Emboss
   - Sharpen
   - Sepia tone
+  - Vintage Film (new!)
   - And more!
 - Real-time side-by-side preview of filtered images
 - Download functionality for processed images
 - Modern responsive UI
 - Zero disk storage (all operations happen in memory)
+
+## Available Filters
+
+The application includes the following filters:
+
+- **Grayscale**: Converts image to black and white
+- **Blur**: Applies Gaussian blur effect
+- **Contour**: Detects and enhances edges
+- **Detail**: Enhances image details
+- **Edge Enhance**: Sharpens edges
+- **Emboss**: Creates embossed effect
+- **Sharpen**: Increases image sharpness
+- **Smooth**: Reduces noise and smooths the image
+- **Brightness**: Increases image brightness by 50%
+- **Contrast**: Increases image contrast by 50%
+- **Invert**: Inverts the colors of the image
+- **Sepia**: Applies a warm sepia tone effect
+- **Vintage Film**: Applies a classic film camera look with:
+  - Warm color temperature adjustment
+  - Film grain effect
+  - Vignette darkening
+  - Subtle contrast reduction
+  - Soft focus effect
 
 ## Key Technical Aspects
 
