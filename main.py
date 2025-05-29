@@ -11,6 +11,7 @@ import uuid
 import uvicorn
 import random
 from PIL.ImageFilter import BuiltinFilter
+import numpy as np
 
 # Get the base directory using the current file's location
 BASE_DIR = Path(__file__).resolve().parent
@@ -308,18 +309,15 @@ async def api_apply_filter(
         enhancer = ImageEnhance.Contrast(img)
         filtered_img = enhancer.enhance(1.5)
     elif selected_filter == "invert":
-        # Invert colors
+        # Invert colors using a more efficient method
         rgb_img = img.convert('RGB')
-        width, height = rgb_img.size
-        pixels = rgb_img.load()
-        
-        for y in range(height):
-            for x in range(width):
-                r, g, b = rgb_img.getpixel((x, y))
-                # Invert each color channel
-                pixels[x, y] = (255 - r, 255 - g, 255 - b)
-        
-        filtered_img = rgb_img
+        # Use numpy for faster pixel manipulation
+        # Convert image to numpy array
+        img_array = np.array(rgb_img)
+        # Invert all pixels at once using numpy's broadcasting
+        inverted_array = 255 - img_array
+        # Convert back to PIL Image
+        filtered_img = Image.fromarray(inverted_array.astype('uint8'))
     elif selected_filter == "sepia":
         # Convert to sepia tone using standard coefficients
         rgb_img = img.convert('RGB')
