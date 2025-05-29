@@ -3,6 +3,64 @@ document.addEventListener("DOMContentLoaded", function () {
   const fileInput = document.getElementById("image-upload");
   const fileLabel = document.querySelector(".file-label");
   const previewContainer = document.getElementById("preview-container");
+  const fileInputContainer = document.querySelector(".file-input-container");
+
+  // Drag and Drop functionality
+  if (fileInputContainer && fileInput) {
+    // Prevent default drag behaviors on the entire document
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+      document.addEventListener(eventName, preventDefaults, false);
+      document.body.addEventListener(eventName, preventDefaults, false);
+    });
+
+    // Highlight drop area when item is dragged over it
+    ['dragenter', 'dragover'].forEach(eventName => {
+      fileInputContainer.addEventListener(eventName, highlight, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+      fileInputContainer.addEventListener(eventName, unhighlight, false);
+    });
+
+    // Handle dropped files
+    fileInputContainer.addEventListener('drop', handleDrop, false);
+
+    function preventDefaults(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    function highlight(e) {
+      fileInputContainer.classList.add('drag-over');
+    }
+
+    function unhighlight(e) {
+      fileInputContainer.classList.remove('drag-over');
+    }
+
+    function handleDrop(e) {
+      const dt = e.dataTransfer;
+      const files = dt.files;
+
+      if (files.length > 0) {
+        const file = files[0];
+        
+        // Check if it's an image file
+        if (file.type.startsWith('image/')) {
+          // Create a new FileList-like object and assign it to the input
+          const dataTransfer = new DataTransfer();
+          dataTransfer.items.add(file);
+          fileInput.files = dataTransfer.files;
+
+          // Trigger the change event to handle preview and form submission
+          const event = new Event('change', { bubbles: true });
+          fileInput.dispatchEvent(event);
+        } else {
+          alert('Please drop an image file.');
+        }
+      }
+    }
+  }
 
   if (fileInput) {
     fileInput.addEventListener("change", function () {
